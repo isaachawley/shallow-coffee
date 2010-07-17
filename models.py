@@ -2,31 +2,23 @@ from google.appengine.ext import db
 import geo.geomodel
 
 class PicBlob(db.Model):
-	#name
-	blob = db.BlobProperty()
+  #name
+  blob = db.BlobProperty()
 	
 class ThumbBlob(db.Model):
-	blob = db.BlobProperty()
+  blob = db.BlobProperty()
+
+class Profile(geo.geomodel.GeoModel):
+  nick = db.StringProperty()
+  joined = db.DateTimeProperty(auto_now=True)
+  age = db.DateProperty()
+  gender = db.StringProperty() # M F O
+  wants = db.StringProperty() # M F MF OO
 
 class Pic(db.Model):
-	title = db.StringProperty()
-	desc = db.StringProperty()
-	picBlob = db.ReferenceProperty(PicBlob)
-	thumbBlob = db.ReferenceProperty(ThumbBlob)
-	#location property
-	
-class Post(geo.geomodel.GeoModel):
-	#location from geomodel
-	#copy of the initial reply data
-	#	so that we dont have to double fetch initially
-	content = db.StringProperty()
-	modified = db.DateTimeProperty(auto_now=True)
-	pic = db.ReferenceProperty(Pic)
+  title = db.StringProperty()
+  desc = db.StringProperty()
+  picBlob = db.ReferenceProperty(PicBlob)
+  thumbBlob = db.ReferenceProperty(ThumbBlob)
+  profile = db.ReferenceProperty(Profile)
 
-class Reply(db.Model):
-	#the post
-	pic = db.ReferenceProperty(Pic) #to a picture
-	content = db.StringProperty()
-	post = db.ReferenceProperty(Post) #to a post
-	modified = db.DateTimeProperty(auto_now=True)
-	

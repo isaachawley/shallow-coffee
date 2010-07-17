@@ -1,0 +1,9 @@
+questions: isaachawley@gmail.com
+
+This is a Google App Engine app. Requires the GAE sdk.
+
+You also need the Python Image Library (PIL).
+
+Uses http://code.google.com/p/geomodel/ which is absolutely awesome. Thank you guys so much.
+
+I'm not honestly sure what this will be yet.
