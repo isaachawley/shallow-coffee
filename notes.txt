@@ -1,0 +1,12 @@
+def set_trace():
+    import pdb, sys
+    sys.stdout = sys.__stdout__
+    sys.stdin = sys.__stdin__
+    debugger = pdb.Pdb()
+    debugger.set_trace(sys._getframe().f_back)
+#set_trace()
+
+http://maps.google.com/maps/geo?q=98004&output=json&sensor=false&key=ABQIAAAAGGMJIuUzby07NUrR7mallhRzMbK_vc1IJzc6XHaFszlH54JBnhSVeGU5h8-LsX0JY8fEk5y5pYPqbw
+
+http://tookthishere.appspot.com gmaps api key
+ABQIAAAAGGMJIuUzby07NUrR7mallhTO5SMOnbNMld8-9ly8A2W2BJna7hTVMeUv5o1lc66IuTbSqr-ctvoUKg

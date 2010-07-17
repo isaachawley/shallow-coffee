@@ -1,0 +1,59 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+</head>
+<body>
+<div class="container round">
+<h1>//post 
+	<a href="/loc/coords/{{post.lon}}/{{post.lat}}/">
+		//Return to map //
+	</a>
+</h1>
+<img src="/image/{{post.pic}}" width="100%" class="round">
+<p>//content//<br>
+	{{post.content}} // {{post.mod}}
+</p>
+<h2>[list replies]</h2>
+<table width="100%" class="imgtable">
+	<tr>
+		<th class="imgtd" width="100px">[pic]</th>
+		<th class="imgtd">desc</th>
+	</tr>
+	{% for reply in replies %}
+	<tr>
+		<td class="imgtd">
+			<a href="/fullimg/{{reply.pic}}">
+			<img src="/thumb/{{reply.pic}}" height="56px">
+			</a>
+		</td>
+		<td class="imgtd">
+			{{reply.desc}}
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+
+<div class="formdiv round">
+	<h2>add a reply</h2>
+<form action="/upload" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="action" value="reply">
+	<input type="hidden" name="postid" value="{{post.id}}">
+	<table class="formtable">
+		<tr>
+			<td>
+				image, optional
+			</td><td width="75%">	
+				<input type="file" name="file" />
+			</td>
+		</tr><tr>
+			<td>
+				Reply
+			</td><td>
+				<input type="text" name="desc" value="Reply" class="fill"></input>
+			</td>
+		</tr>
+	</table>
+	<button type="submit" class="roundbutton round submitbutton"> Add Reply </button>
+</form>
+</div>
+</div>
+</body>

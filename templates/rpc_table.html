@@ -1,0 +1,16 @@
+<table width="90%" class="imgtable">
+	<tr>
+		<th class="imgtd" width="90px">//[img]</th>
+		<th class="imgtd">//[descr]</th>
+	</tr>
+	{% for post in posts %}
+		<tr class="imgrow">
+			<td class="imgtd">
+				<a href="/post/{{post.id}}">
+				<img src="/thumb/{{post.picid}}" height="56x" />
+				</a>
+			</td>
+			<td class="imgtd"><a href="/post/{{post.id}}">{{post.content}}</a></td>
+		</tr>
+	{% endfor %}
+</table>

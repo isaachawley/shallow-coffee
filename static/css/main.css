@@ -1,0 +1,88 @@
+.container {
+	width : 80%;
+	margin-left : auto;
+	margin-right : auto;
+	background-color : #F0F0F0;
+	padding : 2em;
+}
+
+body {
+	background-color:#5981B2;
+	font-family:'Lucida Grande',sans-serif;
+}
+
+.map{
+	background-color:#F0F0F0;
+}
+
+.middle{
+	margin-left : auto;
+	margin-right : auto;
+	width : 40%;
+}
+
+.map_controls{
+	margin-left : auto;
+	margin-right : auto;
+	width:20%;
+	padding:.5em;
+}
+
+.gobutton{
+	width:100%;
+}
+
+.roundbutton {
+	border:1px solid #BBBBBB;
+	font-weight: bold;
+	font-size: 14px;
+	background-image : url('/static/more.gif');
+	cursor:pointer;
+}
+
+.formdiv{
+	background-color:#F0F0F0;
+	padding : .5em;
+	border: 1px solid #BBBBBB;
+	margin-top : 1.5em;
+}
+
+.formtable{
+	width:100%;
+}
+
+.bigbutton{
+	font-size:16px;
+}
+
+.piclist{
+	background-color:#F0F0F0;
+	padding : .5em;
+}
+
+.imgtable{
+	border-collapse:collapse;
+}
+
+#showformbutton{
+	width:100%;
+}
+
+.imgtd{
+	border-bottom : 1px solid black;
+}
+
+.round {
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	border-bottom-left-radius: 5px 5px;
+	border-bottom-right-radius: 5px 5px;
+	border-top-left-radius: 5px 5px;
+	border-top-right-radius: 5px 5px;
+}
+
+td input.fill {
+	width: 99% 
+}

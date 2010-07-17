@@ -1,0 +1,41 @@
+application: shallowcoffee
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /static
+  static_dir: static
+    
+- url: /
+  script: main.py
+
+- url: /loc.*
+  script: main.py
+  
+- url: /latest.*
+  script: main.py
+  
+- url: /updateModels.*
+  script: main.py
+
+- url: /upload.*
+  script: upload.py
+
+- url: /image.*
+  script: servImage.py
+  
+- url: /fullimg.*
+  script: fullimg.py
+  
+- url: /thumb.*
+  script: servthumb.py
+  
+- url: /test/.*
+  script: main.py
+  
+- url: /post.*
+  script: post.py
+  
+- url: /rpc.*
+  script: rpc.py
