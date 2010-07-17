@@ -22,6 +22,9 @@ handlers:
 - url: /upload.*
   script: upload.py
 
+- url: /new_profile.*
+  script: new_profile.py
+
 - url: /image.*
   script: servImage.py
   

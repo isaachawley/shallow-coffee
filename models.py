@@ -21,4 +21,5 @@ class Pic(db.Model):
   picBlob = db.ReferenceProperty(PicBlob)
   thumbBlob = db.ReferenceProperty(ThumbBlob)
   profile = db.ReferenceProperty(Profile)
+  email = db.StringProperty()
 

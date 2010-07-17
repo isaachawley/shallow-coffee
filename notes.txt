@@ -10,3 +10,10 @@ http://maps.google.com/maps/geo?q=98004&output=json&sensor=false&key=ABQIAAAAGGM
 
 http://tookthishere.appspot.com gmaps api key
 ABQIAAAAGGMJIuUzby07NUrR7mallhTO5SMOnbNMld8-9ly8A2W2BJna7hTVMeUv5o1lc66IuTbSqr-ctvoUKg
+
+
+profile creation:
+1. location
+2. basic
+3. pics
+
