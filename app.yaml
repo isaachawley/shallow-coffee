@@ -37,8 +37,8 @@ handlers:
 - url: /test/.*
   script: main.py
   
-- url: /post.*
-  script: post.py
+- url: /profile.*
+  script: profile.py
   
 - url: /rpc.*
   script: rpc.py

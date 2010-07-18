@@ -46,7 +46,7 @@ class MainHandler(webapp.RequestHandler):
 		reply.put()
 		self.redirect('/post/' + postid)
 	
-	def newpost(self):
+	def new_profile(self):
 		if self.request.get("loctype") == "name":
 			try:
 				gc = geocode.GeoCode()
@@ -64,61 +64,31 @@ class MainHandler(webapp.RequestHandler):
 		else:
 			self.request.out.write("Wrong loctype")
 			return
-	
 		
-		picFile = self.request.get("file")
-		if picFile != '':
-			#avatar = images.resize(self.request.get("img"), 32, 32)
-			#images.Image(photo.full_size_image)
-			try:
-				picBlob = models.PicBlob(blob = picFile)
-				picBlob.put()
-				picImg = images.Image(picFile)
-				picImg.resize(width=80, height=100)
-				thumb = picImg.execute_transforms(output_encoding=images.JPEG)
-				thumbBlob = models.ThumbBlob(blob = thumb)
-				thumbBlob.put()
-				pic = models.Pic(picBlob = picBlob, thumbBlob = thumbBlob)
-				pic.put()
-			except:
-				self.response.out.write("<h1>Upload Failed</h1>")
-				self.response.out.write("""
-					<p>Your image may have been too big. Unfortunately there is a
-					1 MB limit. You may need to resize your image.
-					""")
-				return
-		else:
-			self.response.out.write("<h1>Pic required for new posts</h1>")
-			return
-		
-		post = models.Post(location=db.GeoPt(float(coords[1]), float(coords[0])),
-						content=self.request.get("desc"), pic=pic)
+		profile = models.Profile(
+      location=db.GeoPt(
+        float(coords[1]), 
+        float(coords[0])),
+		  )
 						
-		post.update_location()
-		post.put()
+		profile.update_location()
+		profile.put()
 
-		reply = models.Reply(content=self.request.get("desc"), pic = pic,
-							post = post)			
-		reply.put()
-		self.redirect('/post/' + post.key().id().__str__())
+		self.redirect('/profile/' 
+        + profile.key().id().__str__() 
+        + '/edit/details/')
 		
 	def get(self):
 		template_values = {
 		'nothing':'nadda'
 		}
-		path = os.path.join(os.path.dirname(__file__), 'templates/new_profile.html')
+		path = os.path.join(os.path.dirname(__file__), 'templates/pick_loc.html')
 		self.response.out.write(template.render(path, template_values))
 
 	
 	def post(self):
-		#picBlob = models.PicBlob()
-		#picBlob.blob = db.Blob(self.request.get("file"))
-		self.response.out.write('<h1><a href="/loc/place/98004/">// Loc // </a></h1><br>')
-		if self.request.get("action") == "thread":
-			self.newpost()
-			
-		elif self.request.get("action") == "reply":
-			self.newreply()
+		if self.request.get("action") == "location":
+			self.new_profile()
 		else:
 			self.response.out.write("What?")
 		

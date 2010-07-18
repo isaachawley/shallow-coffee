@@ -1,5 +1,5 @@
 <div>
-  <form action="/new_profile" method="post">
+  <form action="/profile/{{profileid}}/edit/details" method="post">
     <label for="nick">Nick</label>
     <input type="text" name="nick" value="nick"/>
     <br/>
@@ -10,10 +10,10 @@
     <input type="text" name="gender" value="m"/>
     <br/>
     <label for="wants">Wants</label>
-    <input type="text" name="wants" value="m"/>
+    <input type="text" name="wants" value="f"/>
     <br/>
     <input type="hidden" name="action" value="new"/>
-    <button type="submit">Create Profile</button>
+    <button type="submit">Save</button>
   </form>
 </div>
 
