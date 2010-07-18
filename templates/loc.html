@@ -37,44 +37,7 @@
 </div>
 </div>
 <div class="middle">
-<button id="showformbutton" type="button" class="bigbutton roundbutton round">Upload a Pic</button>
-</div>
-<div id="formdiv" class="formdiv round" style="display:none;">
-	<h2>Upload Your Own Image</h2>
-<form action="/upload" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="action" value="thread"/>
-	<table class="formtable">
-		<tr>
-			<td>
-				//choose an image//
-			</td><td width="75%">	
-				<input type="file" name="file" />
-			</td>
-		</tr><tr>
-			<td>
-				//describe it//
-			</td><td>
-				<input type="text" name="desc" value="Description" class="fill"></input>
-			</td>
-		</tr><tr>
-			<td>
-				//add a location//
-			</td><td>
-				<input type="text" name="loc" value="98004" id="locbox"/>
-				[<input type="radio" name="loctype" value="name" checked>Place Name]
-				[<input type="radio" name="loctype" value="coords" id="coordinput">Coords]
-			</td>
-		</tr><tr>
-			<td>
-			
-			</td><td>
-				<button type="button" class="roundbutton round" onclick="getlocfrommap()">Get Loc From Map</button> 
-			</td>
-		</tr>
-	</table>
-	<button type="submit" class="roundbutton round bigbutton middle"> Upload Image </button><br>
-	//possible place names include "98009" or "Bellevue, WA" or "NE 8th St and 112th, 98004"
-</form>
+<a id="showformbutton" href="/new_profile/" class="bigbutton roundbutton round">New Profile</a>
 </div>
 </div>
 </body>
