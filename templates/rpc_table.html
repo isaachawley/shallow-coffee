@@ -1,16 +1,31 @@
-<table width="90%" class="imgtable">
-	<tr>
-		<th class="imgtd" width="90px">//[img]</th>
-		<th class="imgtd">//[descr]</th>
-	</tr>
+<div>
 	{% for profile in profiles %}
-		<tr class="imgrow">
-			<td class="imgtd">
-				<a href="/profile/{{profile.id}}/view">
-				<img src="/thumb/{{profile.picid}}" height="56x" />
-				</a>
-			</td>
-			<td class="imgtd"><a href="/profile/{{profile.id}}/view">{{profile.nick}}</a></td>
-		</tr>
+    <div>
+      <div class="profile_details">
+      <span>
+            <a href="/profile/{{profile.key.id}}/view">
+        <h1>
+        {{profile.nick}}
+        </h1>
+            </a>
+      </span>
+      <span>
+        <!-- joined // {{profile.joined}}<br/> -->
+          age // {{profile.age}}<br/>
+          gender // {{profile.gender}}
+        </span>
+        <span>  </span>
+        <span>
+          wants // {{profile.wants}}<br/>
+          email // {{profile.email}}
+      </span>
+    </div>
+    <div>
+      {% for pic in profile.pictures %}
+        <span>
+          <a href="/fullimg/{{pic.key.id}}"><img src="/thumb/{{pic.key.id}}" /></a>
+        </span>
+      {% endfor %}
+    </div>
 	{% endfor %}
-</table>
+</div>

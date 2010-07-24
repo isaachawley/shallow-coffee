@@ -1,0 +1,27 @@
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+<div>
+  <div class="profile_details">
+  <span>
+    <h1>
+    {{profile.nick}}
+    </h1>
+  </span>
+  <span>
+    <!-- joined // {{profile.joined}}<br/> -->
+      age // {{profile.age}}<br/>
+      gender // {{profile.gender}}
+    </span>
+    <span>  </span>
+    <span>
+      wants // {{profile.wants}}<br/>
+      email // {{profile.email}}
+  </span>
+</div>
+<div>
+  {% for pic in pictures %}
+    <span>
+      <a href="/fullimg/{{pic.key.id}}"><img src="/thumb/{{pic.key.id}}" /></a>
+    </span>
+  {% endfor %}
+</div>
+</div>

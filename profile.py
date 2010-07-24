@@ -18,7 +18,18 @@ class MainHandler(webapp.RequestHandler):
 
     if (action == 'view'):
       profile = models.Profile.get_by_id(int(profileid))
-      self.response.out.write("nick["+profile.nick+"] age[] gender["+profile.gender+"] wants["+profile.wants+"] ")
+      pictures = profile.pictures
+
+      template_values = {
+            'profile' : profile,
+            'pictures' : pictures,
+          }
+
+      path = os.path.join(
+          os.path.dirname(__file__), 
+          'templates/view_profile.html'
+          )
+      self.response.out.write(template.render(path, template_values))
 
     if (action == 'edit'):
       what = self.request.path_info_pop()
@@ -55,7 +66,8 @@ class MainHandler(webapp.RequestHandler):
     profile = models.Profile.get_by_id(int(profileid))
 
     profile.nick = self.request.get('nick')
-    #profile.age = self.request.get('age')
+    #profile.age = int(self.request.get('age'))
+    # date stuff ugh :(
     profile.gender = self.request.get('gender')
     profile.wants = self.request.get('wants')
     profile.put()

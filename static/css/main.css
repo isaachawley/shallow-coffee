@@ -6,8 +6,11 @@
 	padding : 2em;
 }
 
+.profile_details span {
+  display : inline-block;
+}
+
 body {
-	background-color:#5981B2;
 	font-family:'Lucida Grande',sans-serif;
 }
 

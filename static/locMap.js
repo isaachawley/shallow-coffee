@@ -28,16 +28,16 @@ $(document).ready(function(){
 	);
 	
 	//get latest pics
-	var req = new XMLHttpRequest();
-	var url = '/latest';
-    req.open('GET', url, true);
-    req.onreadystatechange = function(){
-      if(req.readyState == 4 && req.status == 200) {
-		//insert the table html in the container
-		$("#latest_container").html(req.responseText);
-      }
-    }
-    req.send(null);
+//	var req = new XMLHttpRequest();
+//	var url = '/latest';
+//    req.open('GET', url, true);
+//    req.onreadystatechange = function(){
+//      if(req.readyState == 4 && req.status == 200) {
+//		//insert the table html in the container
+//		$("#latest_container").html(req.responseText);
+//      }
+//    }
+//    req.send(null);
 	
    initialize();
  });
@@ -105,7 +105,7 @@ function initialize() {
         for (var phash in response) {
           var point = new GLatLng(response[phash]['lon'], response[phash]['lat']);
           var html = "<div class='infowindow'>"
-				+ "<a href='/post/"+response[phash]['id']+"/'>"  
+				+ "<a href='/profile/"+response[phash]['id']+"/view'>"  
                 + "<img src='/thumb/"+response[phash]['picid']+"' height='50'></img>"
                 + "</a>"
                 + "</div>";

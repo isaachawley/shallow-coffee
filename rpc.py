@@ -16,30 +16,38 @@ import geocode
 
 class MainHandler(webapp.RequestHandler):
   def getNearby(self):
+    logging.debug('start getNearby')
     lat = self.request.get("lon")
     lon = self.request.get("lat")
+    logging.debug('getNearby lon[' + lon + '] lat[' + lat + ']')
     mainHash = {} #main response hash
     mapHash = {} #map data hash
     profiles = models.Profile.proximity_fetch(
           models.Profile.all(), 
           db.GeoPt(float(lon), float(lat)), 
           max_results=10)
-    temps = []
+
+    #debugging
+    for prof in profiles:
+      logging.debug('all profiles['+ prof.nick +']')
+
+
     for p in profiles:
       plocs = {} #dict for profiles
       plocs["lon"] = p.location.lat
       plocs["lat"] = p.location.lon
       plocs["id"] = p.key().id().__str__()
-      #plocs["picid"] = p.pic.key().id().__str__()
+      if (p.pictures.count() > 0):
+        plocs["picid"] = p.pictures[0].key().id().__str__()
       #plocs["content"] = p.content
       plocs["nick"] = p.nick
+      logging.debug('getNearby adding[' + p.nick + '] to maphash')
       mapHash[p.key().__str__()] = plocs
-      temps.append(plocs)
       
     mainHash["mapdata"] = mapHash
 
     template_values = {
-      "profiles" : temps
+      "profiles" : profiles, 
     }
     path = os.path.join(os.path.dirname(__file__), 'templates/rpc_table.html')
     templatehtml = template.render(path, template_values)
@@ -57,6 +65,7 @@ class MainHandler(webapp.RequestHandler):
     self.response.out.write("what?")
 
 def main():
+  logging.getLogger().setLevel(logging.DEBUG)
   application = webapp.WSGIApplication([('/rpc.*', MainHandler)],
                                        debug=True)
   wsgiref.handlers.CGIHandler().run(application)
