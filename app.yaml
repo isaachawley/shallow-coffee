@@ -19,8 +19,8 @@ handlers:
 - url: /updateModels.*
   script: main.py
 
-- url: /upload.*
-  script: upload.py
+- url: /upload_pic.*
+  script: upload_pic.py
 
 - url: /new_profile.*
   script: new_profile.py

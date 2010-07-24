@@ -32,9 +32,13 @@ class MainHandler(webapp.RequestHandler):
       profiledata["lat"] = profile.location.lat
       profiledata["lon"] = profile.location.lon
 
+      path = os.path.join(os.path.dirname(__file__), 'templates/upload_pic.html')
+      addpic_html = template.render(path, {'profileid' : profileid})
+
       template_values = {
       'profile': profiledata,
       'profileid' : profileid,
+      'addpic_html' : addpic_html,
       }
       path = os.path.join(os.path.dirname(__file__), 'templates/edit_profile_details.html')
       self.response.out.write(template.render(path, template_values))

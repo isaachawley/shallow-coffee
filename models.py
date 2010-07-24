@@ -2,7 +2,6 @@ from google.appengine.ext import db
 import geo.geomodel
 
 class PicBlob(db.Model):
-  #name
   blob = db.BlobProperty()
 	
 class ThumbBlob(db.Model):
@@ -14,12 +13,11 @@ class Profile(geo.geomodel.GeoModel):
   age = db.DateProperty()
   gender = db.StringProperty() # M F O
   wants = db.StringProperty() # M F MF OO
+  email = db.StringProperty()
 
 class Pic(db.Model):
-  title = db.StringProperty()
   desc = db.StringProperty()
   picBlob = db.ReferenceProperty(PicBlob)
   thumbBlob = db.ReferenceProperty(ThumbBlob)
-  profile = db.ReferenceProperty(Profile)
-  email = db.StringProperty()
+  profile = db.ReferenceProperty(Profile, collection_name='pictures')
 
