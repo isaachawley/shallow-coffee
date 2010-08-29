@@ -24,6 +24,10 @@ body {
 	width : 40%;
 }
 
+.markernick{
+  padding : 10px;
+}
+
 .map_controls{
 	margin-left : auto;
 	margin-right : auto;

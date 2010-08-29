@@ -103,11 +103,15 @@ function initialize() {
 		mgr.clearMarkers();
         var batch = [];
         for (var phash in response) {
+          console.debug('resp',response[phash]);
           var point = new GLatLng(response[phash]['lon'], response[phash]['lat']);
           var html = "<div class='infowindow'>"
 				+ "<a href='/profile/"+response[phash]['id']+"/view'>"  
                 + "<img src='/thumb/"+response[phash]['picid']+"' height='50'></img>"
                 + "</a>"
+                + "<span class='markernick'>"
+                + response[phash]['nick']
+                + "</span>"
                 + "</div>";
           var marker = createMarker(point, html);
           batch.push(marker)
