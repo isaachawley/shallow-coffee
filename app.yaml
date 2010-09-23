@@ -25,6 +25,12 @@ handlers:
 - url: /new_profile.*
   script: new_profile.py
 
+- url: /new_venue.*
+  script: venue.py
+
+- url: /venue.*
+  script: venue.py
+
 - url: /image.*
   script: servImage.py
   

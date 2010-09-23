@@ -8,6 +8,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from django.utils import simplejson
+from google.appengine.api import users 
 from google.appengine.ext import webapp
 from google.appengine.api import images
 
@@ -16,37 +17,11 @@ import models
 import geocode
 
 class MainHandler(webapp.RequestHandler):
-  def newreply(self):
-    postid = self.request.get("postid")
-    post = models.Post.get_by_id(int(postid))
-    
-    picFile = self.request.get("file")
-    if picFile != '':
-      try:
-        picBlob = models.PicBlob(blob = picFile)
-        picBlob.put()
-        picImg = images.Image(picFile)
-        picImg.resize(width=80, height=100)
-        thumb = picImg.execute_transforms(output_encoding=images.JPEG)
-        thumbBlob = models.ThumbBlob(blob = thumb)
-        thumbBlob.put()
-        pic = models.Pic(picBlob = picBlob, thumbBlob = thumbBlob)
-        pic.put()
-      except:
-        self.response.out.write("<h1>Upload Failed</h1>")
-        self.response.out.write("""
-          <p>Your image may have been too big. Unfortunately there is a
-          1 MB limit. You may need to resize your image.
-          """)
-        return
-    else:
-      pic = post.pic
-    reply = models.Reply(content=self.request.get("desc"), pic = pic,
-              post = post)
-    reply.put()
-    self.redirect('/post/' + postid)
-  
   def new_profile(self):
+    user = users.get_current_user()
+    if not user:
+      self.redirect(users.create_login_url(self.request.uri))
+
     if self.request.get("loctype") == "name":
       try:
         gc = geocode.GeoCode()
@@ -69,6 +44,7 @@ class MainHandler(webapp.RequestHandler):
       location=db.GeoPt(
         float(coords[1]), 
         float(coords[0])),
+      user_id = user.user_id(),
       )
             
     profile.update_location()
@@ -88,7 +64,6 @@ class MainHandler(webapp.RequestHandler):
     }
     path = os.path.join(os.path.dirname(__file__), 'templates/pick_loc.html')
     self.response.out.write(template.render(path, template_values))
-
 
   def post(self):
     if self.request.get("action") == "location":

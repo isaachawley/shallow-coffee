@@ -2,6 +2,7 @@
 import wsgiref.handlers
 import os
 from google.appengine.ext import webapp
+from google.appengine.api import users 
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 
@@ -11,9 +12,12 @@ import geocode
 import geo.geotypes
 
 class MainHandler(webapp.RequestHandler):
-
-	def get(self):
-		self.redirect('/loc/place/Malaysia/')
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      self.redirect('/loc/place/Kuala Lumpur/')
+    else:
+      self.redirect(users.create_login_url(self.request.uri))
 
 class Loc(webapp.RequestHandler):
 	def get(self):

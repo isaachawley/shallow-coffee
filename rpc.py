@@ -4,7 +4,7 @@ import os
 import logging
 
 from google.appengine.ext import webapp
-#from google.appengine.api import users
+from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from django.utils import simplejson
@@ -16,6 +16,7 @@ import geocode
 
 class MainHandler(webapp.RequestHandler):
   def getNearby(self):
+    user = users.get_current_user()
     logging.debug('start getNearby')
     lat = self.request.get("lon")
     lon = self.request.get("lat")
@@ -23,7 +24,7 @@ class MainHandler(webapp.RequestHandler):
     mainHash = {} #main response hash
     mapHash = {} #map data hash
     profiles = models.Profile.proximity_fetch(
-          models.Profile.all(), 
+          models.Profile.all().filter('user_id !=',user.user_id()), 
           db.GeoPt(float(lon), float(lat)), 
           max_results=10)
 

@@ -19,6 +19,13 @@
           wants // {{profile.wants}}<br/>
           email // {{profile.email}}
       </span>
+      <span>
+        <a href="/profile/{{profile.key.id}}/ask">
+          <h2>
+          Ask
+        </h2>
+        </a>
+      </span>
     </div>
     <div>
       {% for pic in profile.pictures %}

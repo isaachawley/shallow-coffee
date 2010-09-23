@@ -103,7 +103,6 @@ function initialize() {
 		mgr.clearMarkers();
         var batch = [];
         for (var phash in response) {
-          console.debug('resp',response[phash]);
           var point = new GLatLng(response[phash]['lon'], response[phash]['lat']);
           var html = "<div class='infowindow'>"
 				+ "<a href='/profile/"+response[phash]['id']+"/view'>"  
