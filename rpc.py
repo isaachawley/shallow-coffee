@@ -28,11 +28,6 @@ class MainHandler(webapp.RequestHandler):
           db.GeoPt(float(lon), float(lat)), 
           max_results=10)
 
-    #debugging
-    for prof in profiles:
-      logging.debug('all profiles['+ prof.nick +']')
-
-
     for p in profiles:
       plocs = {} #dict for profiles
       plocs["lon"] = p.location.lat

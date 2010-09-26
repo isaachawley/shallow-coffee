@@ -2,6 +2,7 @@
 import wsgiref.handlers
 import os
 from google.appengine.ext import webapp
+from google.appengine.api import users 
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 
@@ -19,6 +20,18 @@ class MainHandler(webapp.RequestHandler):
     if (action == 'view'):
       profile = models.Profile.get_by_id(int(profileid))
       pictures = profile.pictures
+      inviters = profile.inviters
+      invitees = profile.invitees
+
+      #when this profile did the inviting, is the inviter
+      for inviter in inviters:
+        self.response.out.write('invitee:' + inviter.invitee.nick + '<br>')
+
+      #when this profile is the invitee
+      for invitee in invitees:
+        self.response.out.write('inviter:' + invitee.inviter.nick + '<br>')
+
+      #the collection names are confusing and I should change them
 
       template_values = {
             'profile' : profile,
@@ -53,6 +66,21 @@ class MainHandler(webapp.RequestHandler):
       }
       path = os.path.join(os.path.dirname(__file__), 'templates/edit_profile_details.html')
       self.response.out.write(template.render(path, template_values))
+
+    if (action == 'ask'):
+      user = users.get_current_user()
+      if not user:
+        self.redirect(users.create_login_url(self.request.uri))
+      asker = models.Profile.all().filter('user_id ==',user.user_id()).fetch(1)[0]
+      askee = models.Profile.get_by_id(int(profileid))
+      venues = models.Venue.all()
+      for venuea in venues:
+        venue = venuea
+
+      invitation = models.Invited(inviter = asker, invitee = askee, venue = venue)
+      invitation.put()
+      self.response.out.write('invitation successful')
+
 
   def post(self):
     self.request.path_info_pop()
