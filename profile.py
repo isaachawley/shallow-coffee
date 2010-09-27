@@ -28,8 +28,10 @@ class MainHandler(webapp.RequestHandler):
         self.response.out.write('invitee:' + inviter.invitee.nick + '<br>')
 
       #when this profile is the invitee
+      # profile.i'm the invitee.this is confusing =(
       for invitee in invitees:
-        self.response.out.write('inviter:' + invitee.inviter.nick + '<br>')
+        self.response.out.write('invitee.inviter:' + invitee.inviter.nick + '<br>')
+        self.response.out.write('invitee.invitee:' + invitee.invitee.nick + '<br>')
 
       #the collection names are confusing and I should change them
 

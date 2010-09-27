@@ -1,0 +1,119 @@
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+<div>
+  <div class="profile_details">
+  <span>
+    <h1>
+    {{profile.nick}}
+    </h1>
+  </span>
+  <span>
+    <!-- joined // {{profile.joined}}<br/> -->
+      age // {{profile.age}}<br/>
+      gender // {{profile.gender}}
+    </span>
+    <span>  </span>
+    <span>
+      wants // {{profile.wants}}<br/>
+      email // {{profile.email}}
+  </span>
+</div>
+<div>
+  {% for pic in pictures %}
+    <span>
+      <a href="/fullimg/{{pic.key.id}}"><img src="/thumb/{{pic.key.id}}" /></a>
+    </span>
+  {% endfor %}
+</div>
+<div>
+  <h1>Invitations</h1>
+  {% for invitee in invitees %}
+    <div>
+      <div class="profile_details">
+      <span>
+            <a href="/profile/{{invitee.inviter.key.id}}/view">
+        <h1>
+        {{invitee.inviter.nick}}
+        </h1>
+            </a>
+      </span>
+      <span>
+        <!-- joined // {{profile.joined}}<br/> -->
+          age // {{invitee.inviter.age}}<br/>
+          gender // {{profile.gender}}
+        </span>
+        <span>  </span>
+        <span>
+          wants // {{invitee.inviter.wants}}<br/>
+          email // {{invitee.inviter.email}}
+      </span>
+      <span>
+        <a href="/profile/{{invitee.inviter.key.id}}/accept">
+          <h2>
+           Accept 
+        </h2>
+        </a>
+      </span>
+      <span>
+        <a href="/profile/{{invitee.inviter.key.id}}/decline">
+          <h2>
+            Decline
+        </h2>
+        </a>
+      </span>
+    </div>
+    <div>
+      {% for pic in invitee.inviter.pictures %}
+        <span>
+          <a href="/fullimg/{{pic.key.id}}"><img src="/thumb/{{pic.key.id}}" /></a>
+        </span>
+      {% endfor %}
+    </div>
+	{% endfor %}
+</div>
+<div>
+  <h1>You Invited</h1>
+  {% for inviter in inviters %}
+    <div>
+      <div class="profile_details">
+      <span>
+            <a href="/profile/{{inviter.invitee.key.id}}/view">
+        <h1>
+        {{inviter.invitee.nick}}
+        </h1>
+            </a>
+      </span>
+      <span>
+        <!-- joined // {{profile.joined}}<br/> -->
+          age // {{inviter.invitee.age}}<br/>
+          gender // {{inviter.invitee.gender}}
+        </span>
+        <span>  </span>
+        <span>
+          wants // {{inviter.invitee.wants}}<br/>
+          email // {{inviter.invitee.email}}
+      </span>
+      <span>
+        <a href="/profile/{{inviter.invitee.key.id}}/cancel">
+          <h2>
+            Cancel
+        </h2>
+        </a>
+      </span>
+      <span>
+        <a href="/profile/{{inviter.invitee.key.id}}/report">
+          <h2>
+            Report
+        </h2>
+        </a>
+      </span>
+    </div>
+    <div>
+      {% for pic in inviter.invitee.pictures %}
+        <span>
+          <a href="/fullimg/{{pic.key.id}}"><img src="/thumb/{{pic.key.id}}" /></a>
+        </span>
+      {% endfor %}
+    </div>
+	{% endfor %}
+</div>
+</div>
