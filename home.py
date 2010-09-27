@@ -17,7 +17,6 @@ class MainHandler(webapp.RequestHandler):
     if not user:
       self.redirect(users.create_login_url(self.request.uri))
 
-
     profile = models.Profile.all().filter('user_id =',user.user_id()).get()
 
     template_values = {
