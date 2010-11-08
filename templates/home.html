@@ -1,4 +1,7 @@
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+{% extends "outer_main.html" %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
 <div>
   <div class="profile_details">
   <span>
@@ -117,3 +120,4 @@
 	{% endfor %}
 </div>
 </div>
+{% endblock content %}

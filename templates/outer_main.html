@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+    <!-- inner template head stuff -->
+    <title>
+      {% block title %} shallow-coffee //  {% endblock title %}
+    </title>
+    <!-- main javascript -->
+	  <script type="text/javascript" src="/static/jquery.js"></script>
+    <script type="text/javascript" src="/static/json2.js"></script>
+    <!-- inner javascript -->
+    {% block innerjs %} {% endblock innerjs %}
+  </head>
+  <body {% block bodyattrs %}{% endblock bodyattrs %}>
+    <div class='topbar'>
+      {% block topbar %}
+        <a href="/home/">home</a> / 
+        <a href="/">map</a> / new{% endblock topbar %}
+    </div>
+    <div class='content'>
+      <!-- inner template content -->
+      {% block content %}{% endblock content %}
+    </div>
+  </body>
+</html>

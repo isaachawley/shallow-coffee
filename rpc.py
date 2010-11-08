@@ -49,7 +49,33 @@ class MainHandler(webapp.RequestHandler):
     templatehtml = template.render(path, template_values)
     mainHash["tablehtml"] = templatehtml
     return simplejson.dumps(mainHash)
-		
+
+  def uploadPic(self):
+    profile_id= self.request.get("profile_id")
+    profile = models.Profile.get_by_id(int(profile_id))
+    
+    picFile = self.request.get("file")
+    if picFile != '':
+      try:
+        picBlob = models.PicBlob(blob = picFile)
+        picBlob.put()
+        picImg = images.Image(picFile)
+        picImg.resize(width=80, height=100)
+        thumb = picImg.execute_transforms(output_encoding=images.JPEG)
+        thumbBlob = models.ThumbBlob(blob = thumb)
+        thumbBlob.put()
+        pic = models.Pic(picBlob = picBlob, thumbBlob = thumbBlob, profile = profile)
+        pic.put()
+      except:
+        self.response.out.write("<h1>Upload Failed</h1>")
+        self.response.out.write("""
+          <p>Your image may have been too big. Unfortunately there is a
+          1 MB limit. You may need to resize your image.
+          """)
+        return
+    return '<div> uploadPic NYI </div>'
+    
+    
   def get(self):
     self.request.path_info_pop()
     action = self.request.path_info_pop()
@@ -58,7 +84,10 @@ class MainHandler(webapp.RequestHandler):
       self.response.out.write(self.getNearby())
       
   def post(self):
-    self.response.out.write("what?")
+    self.request.path_info_pop()
+    action = self.request.path_info_pop()
+    if (action == 'pic'):
+      self.response.out.write(self.uploadPic())
 
 def main():
   logging.getLogger().setLevel(logging.DEBUG)
