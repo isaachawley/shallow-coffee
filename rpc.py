@@ -9,6 +9,7 @@ from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from django.utils import simplejson
 from google.appengine.ext import webapp
+from google.appengine.api import images
 
 #custom imports
 import models
@@ -56,24 +57,18 @@ class MainHandler(webapp.RequestHandler):
     
     picFile = self.request.get("file")
     if picFile != '':
-      try:
-        picBlob = models.PicBlob(blob = picFile)
-        picBlob.put()
-        picImg = images.Image(picFile)
-        picImg.resize(width=80, height=100)
-        thumb = picImg.execute_transforms(output_encoding=images.JPEG)
-        thumbBlob = models.ThumbBlob(blob = thumb)
-        thumbBlob.put()
-        pic = models.Pic(picBlob = picBlob, thumbBlob = thumbBlob, profile = profile)
-        pic.put()
-      except:
-        self.response.out.write("<h1>Upload Failed</h1>")
-        self.response.out.write("""
-          <p>Your image may have been too big. Unfortunately there is a
-          1 MB limit. You may need to resize your image.
-          """)
-        return
-    return '<div> uploadPic NYI </div>'
+      picBlob = models.PicBlob(blob = picFile)
+      picBlob.put()
+      picImg = images.Image(picFile)
+      picImg.resize(width=80, height=100)
+      thumb = picImg.execute_transforms(output_encoding=images.JPEG)
+      thumbBlob = models.ThumbBlob(blob = thumb)
+      thumbBlob.put()
+      pic = models.Pic(picBlob = picBlob, thumbBlob = thumbBlob, profile = profile)
+      pic.put()
+      return '<a href="/fullimg/' + str(pic.key().id()) + '"><img src="/thumb/'+ str(pic.key().id()) + '" /></a>'
+    else:
+      return '<div> upload failed </div>'
     
     
   def get(self):

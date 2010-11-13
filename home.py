@@ -19,11 +19,15 @@ class MainHandler(webapp.RequestHandler):
 
     profile = models.Profile.all().filter('user_id =',user.user_id()).get()
 
+    path = os.path.join(os.path.dirname(__file__), 'templates/upload_pic.html')
+    addpic_html = template.render(path, {'profileid' : profile.key().id()})
+
     template_values = {
         'profile' : profile,
         'pictures' : profile.pictures,
         'inviters' : profile.inviters,
         'invitees' : profile.invitees,
+        'addpic_html' : addpic_html,
     }
     path = os.path.join(os.path.dirname(__file__), 'templates/home.html')
     self.response.out.write(template.render(path, template_values))
