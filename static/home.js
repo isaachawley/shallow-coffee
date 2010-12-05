@@ -11,7 +11,18 @@ $(document).ready(function(){
   //}
   //req.send(null);
   $('#pic_up').click(function(evt){
-    alert('hello!');
+
   });
+
+  var uploader = new qq.FileUploader({
+    element: document.getElementById('file_uploader'),
+    action: '/rpc/pic',
+    params: {
+              'profile_id' : $('#file_uploader').attr('profile_id'), 
+          
+            },
+   });
+ 
+console.debug($('#file_uploader'));
 
 });

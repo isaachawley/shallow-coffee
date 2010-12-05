@@ -55,7 +55,7 @@ class MainHandler(webapp.RequestHandler):
     profile_id= self.request.get("profile_id")
     profile = models.Profile.get_by_id(int(profile_id))
     
-    picFile = self.request.get("file")
+    picFile = self.request.body
     if picFile != '':
       picBlob = models.PicBlob(blob = picFile)
       picBlob.put()
