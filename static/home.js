@@ -10,6 +10,8 @@ $(document).ready(function(){
   //  }
   //}
   //req.send(null);
+  $('#pic_up').click(function(evt){
+    alert('hello!');
+  });
 
-  alert('hello!');
 });
