@@ -10,6 +10,7 @@ from google.appengine.ext.webapp import template
 import models
 import geocode
 import geo.geotypes
+import util
 
 class MainHandler(webapp.RequestHandler):
   def get(self):
@@ -23,6 +24,7 @@ class MainHandler(webapp.RequestHandler):
     addpic_html = template.render(path, {'profileid' : profile.key().id()})
 
     template_values = {
+        'logout' : util.create_logout_url(''),
         'profile' : profile,
         'pictures' : profile.pictures,
         'inviters' : profile.inviters,

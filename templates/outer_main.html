@@ -16,7 +16,9 @@
     <div class='topbar'>
       {% block topbar %}
         <a href="/home/">home</a> / 
-        <a href="/">map</a> / new{% endblock topbar %}
+        <a href="/">map</a> / new 
+        <a href="{{ logout }}">/ logout </a>
+      {% endblock topbar %}
     </div>
     <div class='content'>
       <!-- inner template content -->
