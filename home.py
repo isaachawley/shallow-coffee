@@ -19,6 +19,9 @@ class MainHandler(webapp.RequestHandler):
       self.redirect(users.create_login_url(self.request.uri))
 
     profile = models.Profile.all().filter('user_id =',user.user_id()).get()
+    if not profile:
+      self.redirect('/new_profile')
+      return
 
     path = os.path.join(os.path.dirname(__file__), 'templates/upload_pic.html')
     addpic_html = template.render(path, {'profileid' : profile.key().id()})

@@ -22,7 +22,5 @@ $(document).ready(function(){
           
             },
    });
- 
-console.debug($('#file_uploader'));
 
 });

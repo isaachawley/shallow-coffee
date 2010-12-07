@@ -66,9 +66,10 @@ class MainHandler(webapp.RequestHandler):
       thumbBlob.put()
       pic = models.Pic(picBlob = picBlob, thumbBlob = thumbBlob, profile = profile)
       pic.put()
-      return '<a href="/fullimg/' + str(pic.key().id()) + '"><img src="/thumb/'+ str(pic.key().id()) + '" /></a>'
+      #return '<a href="/fullimg/' + str(pic.key().id()) + '"><img src="/thumb/'+ str(pic.key().id()) + '" /></a>'
+      return simplejson.dumps({'success' : True})
     else:
-      return '<div> upload failed </div>'
+      return simplejson.dumps({'success' : False, 'error' : 'dunno'})
     
     
   def get(self):

@@ -15,7 +15,7 @@ class MainHandler(webapp.RequestHandler):
   def get(self):
     user = users.get_current_user()
     if user:
-      self.redirect('/loc/place/Kuala Lumpur/')
+      self.redirect('/home')
     else:
       self.redirect(users.create_login_url(self.request.uri))
 
