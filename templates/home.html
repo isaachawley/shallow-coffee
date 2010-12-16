@@ -127,5 +127,97 @@
     </div>
 	{% endfor %}
 </div>
+<div>
+  <h1>You Accepted</h1>
+  {% for accepter in accepters %}
+    <div>
+      <div class="profile_details">
+      <span>
+            <a href="/profile/{{accepter.invitee.key.id}}/view">
+        <h1>
+        {{accepter.invitee.nick}}
+        </h1>
+            </a>
+      </span>
+      <span>
+        <!-- joined // {{profile.joined}}<br/> -->
+          age // {{accepter.invitee.age}}<br/>
+          gender // {{accepter.invitee.gender}}
+        </span>
+        <span>  </span>
+        <span>
+          wants // {{accepter.invitee.wants}}<br/>
+          email // {{accepter.invitee.email}}
+      </span>
+      <span>
+        <a href="/profile/{{accepter.invitee.key.id}}/cancel">
+          <h2>
+            Cancel
+        </h2>
+        </a>
+      </span>
+      <span>
+        <a href="/profile/{{accepter.invitee.key.id}}/report">
+          <h2>
+            Report
+        </h2>
+        </a>
+      </span>
+    </div>
+    <div>
+      {% for pic in accepter.invitee.pictures %}
+        <span>
+          <a href="/fullimg/{{pic.key.id}}"><img src="/thumb/{{pic.key.id}}" /></a>
+        </span>
+      {% endfor %}
+    </div>
+	{% endfor %}
+</div>
+<div>
+  <h1>Accepted you</h1>
+  {% for acceptee in acceptees %}
+    <div>
+      <div class="profile_details">
+      <span>
+            <a href="/profile/{{acceptee.inviter.key.id}}/view">
+        <h1>
+        {{acceptee.inviter.nick}}
+        </h1>
+            </a>
+      </span>
+      <span>
+        <!-- joined // {{profile.joined}}<br/> -->
+          age // {{acceptee.inviter.age}}<br/>
+          gender // {{acceptee.inviter.gender}}
+        </span>
+        <span>  </span>
+        <span>
+          wants // {{acceptee.inviter.wants}}<br/>
+          email // {{acceptee.inviter.email}}
+      </span>
+      <span>
+        <a href="/profile/{{acceptee.inviter.key.id}}/cancel">
+          <h2>
+            Cancel
+        </h2>
+        </a>
+      </span>
+      <span>
+        <a href="/profile/{{acceptee.inviter.key.id}}/report">
+          <h2>
+            Report
+        </h2>
+        </a>
+      </span>
+    </div>
+    <div>
+      {% for pic in acceptee.inviter.pictures %}
+        <span>
+          <a href="/fullimg/{{pic.key.id}}"><img src="/thumb/{{pic.key.id}}" /></a>
+        </span>
+      {% endfor %}
+    </div>
+	{% endfor %}
+</div>
 </div>
 {% endblock content %}

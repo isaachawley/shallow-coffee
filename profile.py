@@ -79,6 +79,19 @@ class MainHandler(webapp.RequestHandler):
       invitation.put()
       self.response.out.write('invitation successful')
 
+    if (action == 'accept'):
+      user = users.get_current_user()
+      if not user:
+        self.redirect('/')
+      accepter = models.Profile.all().filter('user_id ==',user.user_id()).fetch(1)[0]
+      acceptee = models.Profile.get_by_id(int(profileid))
+      invitation = accepter.invitees.filter('inviter =', acceptee.key()).fetch(1)[0]
+      
+      accepted = models.Accepted(inviter = invitation.inviter, invitee = invitation.invitee, invited_date = invitation.invited_date, venue = invitation.venue)
+
+      invitation.delete()
+      accepted.put()
+      self.redirect('/home')
 
   def post(self):
     self.request.path_info_pop()

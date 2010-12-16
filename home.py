@@ -32,6 +32,8 @@ class MainHandler(webapp.RequestHandler):
         'pictures' : profile.pictures,
         'inviters' : profile.inviters,
         'invitees' : profile.invitees,
+        'accepters' : profile.inviters_accepted,
+        'acceptees' : profile.invitees_accepted,
         'addpic_html' : addpic_html,
     }
     path = os.path.join(os.path.dirname(__file__), 'templates/home.html')
