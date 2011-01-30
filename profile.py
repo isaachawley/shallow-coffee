@@ -65,19 +65,18 @@ class MainHandler(webapp.RequestHandler):
       path = os.path.join(os.path.dirname(__file__), 'templates/edit_profile_details.html')
       self.response.out.write(template.render(path, template_values))
 
-    if (action == 'ask'):
+    if (action == 'invite'):
       user = users.get_current_user()
       if not user:
         self.redirect(users.create_login_url(self.request.uri))
-      asker = models.Profile.all().filter('user_id ==',user.user_id()).fetch(1)[0]
       askee = models.Profile.get_by_id(int(profileid))
-      venues = models.Venue.all()
-      for venuea in venues:
-        venue = venuea
+      template_values = {
+        'profileid' : profileid,
+      }
+      path = os.path.join(os.path.dirname(__file__), 'templates/schedule_form.html')
+      self.response.out.write(template.render(path, template_values))
 
-      invitation = models.Invited(inviter = asker, invitee = askee, venue = venue)
-      invitation.put()
-      self.response.out.write('invitation successful')
+
 
     if (action == 'accept'):
       user = users.get_current_user()
@@ -98,19 +97,33 @@ class MainHandler(webapp.RequestHandler):
     profileid = self.request.path_info_pop()
     action = self.request.path_info_pop()
 
+    if (action == 'ask'):
+      user = users.get_current_user()
+      if not user:
+        self.redirect(users.create_login_url(self.request.uri))
+      asker = models.Profile.all().filter('user_id ==',user.user_id()).fetch(1)[0]
+      askee = models.Profile.get_by_id(int(profileid))
+      venues = models.Venue.all()
+      for venuea in venues:
+        venue = venuea
+
+      invitation = models.Invited(inviter = asker, invitee = askee, venue = venue)
+      invitation.put()
+      #self.response.out.write('invitation successful')
+      self.redirect('/profile/' + profileid + '/view')
+
     if (action == 'edit'):
       what = self.request.path_info_pop()
       self.response.out.write('do[' + action + '] on[' + what + ']')
 
-    profile = models.Profile.get_by_id(int(profileid))
+      profile = models.Profile.get_by_id(int(profileid))
 
-    profile.nick = self.request.get('nick')
-    #profile.age = int(self.request.get('age'))
-    # date stuff ugh :(
-    profile.gender = self.request.get('gender')
-    profile.wants = self.request.get('wants')
-    profile.put()
-    self.redirect('/profile/' + profileid + '/view')
+      profile.nick = self.request.get('nick')
+      #profile.age = int(self.request.get('age'))
+      # date stuff ugh :(
+      profile.gender = self.request.get('gender')
+      profile.wants = self.request.get('wants')
+      profile.put()
 
 
 def main():
