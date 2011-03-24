@@ -48,6 +48,9 @@ handlers:
   
 - url: /profile.*
   script: profile.py
+
+- url: /invite.*
+  script: invite.py
   
 - url: /rpc.*
   script: rpc.py
