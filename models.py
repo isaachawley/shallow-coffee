@@ -31,9 +31,9 @@ class Invited(db.Model):
   inviter = db.ReferenceProperty(Profile, collection_name = 'inviters')
   invitee = db.ReferenceProperty(Profile, collection_name = 'invitees')
   invited_date = db.DateTimeProperty(auto_now=True)
-  date_date_1 = db.DateTimeProperty(auto_now=True)
-  date_date_2 = db.DateTimeProperty(auto_now=True)
-  date_date_3 = db.DateTimeProperty(auto_now=True)
+  date_date_1 = db.DateTimeProperty()
+  date_date_2 = db.DateTimeProperty()
+  date_date_3 = db.DateTimeProperty()
   venue = db.ReferenceProperty(Venue)
 
 class Accepted(db.Model):

@@ -104,11 +104,19 @@ class MainHandler(webapp.RequestHandler):
         venue = venuea
 
       date_1_str = self.request.get('date_1') + ' '  + self.request.get('time_1')
-      #date_1 =  datetime.strptime("21/11/06 16:30", "%d/%m/%y %H:%M")
-      date_1 =  datetime.strptime(date_1_str, "%m/%d/%y %H")
-      self.response.out.write(str(date_1))
-      #invitation = models.Invited(inviter = asker, invitee = askee, venue = venue)
-      #invitation.put()
+      date_1 =  datetime.strptime(date_1_str, "%m/%d/%y %H:%M")
+      date_2_str = self.request.get('date_2') + ' '  + self.request.get('time_2')
+      date_2 =  datetime.strptime(date_2_str, "%m/%d/%y %H:%M")
+      date_3_str = self.request.get('date_3') + ' '  + self.request.get('time_3')
+      date_3 =  datetime.strptime(date_3_str, "%m/%d/%y %H:%M")
+      invitation = models.Invited(
+          inviter = asker, 
+          invitee = askee, 
+          date_date_1 = date_1,
+          date_date_2 = date_2,
+          date_date_3 = date_3,
+          venue = venue)
+      invitation.put()
       self.response.out.write(str(self.request))
       #self.redirect('/profile/' + profileid + '/view')
 
