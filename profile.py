@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import wsgiref.handlers
 import os
+from datetime import datetime, date, time 
 from google.appengine.ext import webapp
 from google.appengine.api import users 
 from google.appengine.ext import db
@@ -47,9 +48,6 @@ class MainHandler(webapp.RequestHandler):
       self.response.out.write(template.render(path, template_values))
 
     if (action == 'edit'):
-      what = self.request.path_info_pop()
-      self.response.out.write('do[' + action + '] on[' + what + ']')
-
       profile = models.Profile.get_by_id(int(profileid))
 
       profiledata = {}
@@ -65,19 +63,16 @@ class MainHandler(webapp.RequestHandler):
       path = os.path.join(os.path.dirname(__file__), 'templates/edit_profile_details.html')
       self.response.out.write(template.render(path, template_values))
 
-    if (action == 'ask'):
+    if (action == 'invite'):
       user = users.get_current_user()
       if not user:
         self.redirect(users.create_login_url(self.request.uri))
-      asker = models.Profile.all().filter('user_id ==',user.user_id()).fetch(1)[0]
       askee = models.Profile.get_by_id(int(profileid))
-      venues = models.Venue.all()
-      for venuea in venues:
-        venue = venuea
-
-      invitation = models.Invited(inviter = asker, invitee = askee, venue = venue)
-      invitation.put()
-      self.response.out.write('invitation successful')
+      template_values = {
+        'profileid' : profileid,
+      }
+      path = os.path.join(os.path.dirname(__file__), 'templates/schedule_form.html')
+      self.response.out.write(template.render(path, template_values))
 
     if (action == 'accept'):
       user = users.get_current_user()
@@ -98,19 +93,34 @@ class MainHandler(webapp.RequestHandler):
     profileid = self.request.path_info_pop()
     action = self.request.path_info_pop()
 
+    if (action == 'ask'):
+      user = users.get_current_user()
+      if not user:
+        self.redirect(users.create_login_url(self.request.uri))
+      asker = models.Profile.all().filter('user_id ==',user.user_id()).fetch(1)[0]
+      askee = models.Profile.get_by_id(int(profileid))
+      venues = models.Venue.all()
+      for venuea in venues:
+        venue = venuea
+
+      date_1_str = self.request.get('date_1') + ' '  + self.request.get('time_1')
+      #date_1 =  datetime.strptime("21/11/06 16:30", "%d/%m/%y %H:%M")
+      date_1 =  datetime.strptime(date_1_str, "%m/%d/%y %H")
+      self.response.out.write(str(date_1))
+      #invitation = models.Invited(inviter = asker, invitee = askee, venue = venue)
+      #invitation.put()
+      self.response.out.write(str(self.request))
+      #self.redirect('/profile/' + profileid + '/view')
+
     if (action == 'edit'):
-      what = self.request.path_info_pop()
-      self.response.out.write('do[' + action + '] on[' + what + ']')
+      profile = models.Profile.get_by_id(int(profileid))
 
-    profile = models.Profile.get_by_id(int(profileid))
-
-    profile.nick = self.request.get('nick')
-    #profile.age = int(self.request.get('age'))
-    # date stuff ugh :(
-    profile.gender = self.request.get('gender')
-    profile.wants = self.request.get('wants')
-    profile.put()
-    self.redirect('/profile/' + profileid + '/view')
+      profile.nick = self.request.get('nick')
+      #profile.age = int(self.request.get('age'))
+      # date stuff ugh :(
+      profile.gender = self.request.get('gender')
+      profile.wants = self.request.get('wants')
+      profile.put()
 
 
 def main():
