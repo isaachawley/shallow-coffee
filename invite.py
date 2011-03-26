@@ -28,6 +28,38 @@ class MainHandler(webapp.RequestHandler):
       invite.delete()
       self.redirect('/home/')
 
+    if (action == 'decline'):
+      user = users.get_current_user()
+      if not user:
+        self.redirect('/')
+
+      invite = models.Invited.get_by_id(int(inviteid))
+      invite_archive = models.Invite_Archive(
+          inviter = invite.inviter,
+          invitee = invite.invitee,
+          invited_date = invite.invited_date,
+          date_date = invite.date_date_1,
+          venue = invite.venue,
+          result = 'declined'
+          )
+      invite_archive.put()
+      #check if valid invitation at some point
+      #notify inviter that their invitation was declined
+      invite.delete()
+      self.redirect('/home/')
+
+    if (action == 'report'):
+      user = users.get_current_user()
+      if not user:
+        self.redirect('/')
+
+      invite = models.Invited.get_by_id(int(inviteid))
+      #check if valid invitation at some point
+      invite.reported = True;
+      invite.reported_note = "reproted!!!"
+      invite.put()
+      self.redirect('/home/')
+
     #path = os.path.join(
     #    os.path.dirname(__file__), 
     #    'templates/view_invite.html'

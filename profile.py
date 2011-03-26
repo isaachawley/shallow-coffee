@@ -117,8 +117,8 @@ class MainHandler(webapp.RequestHandler):
           date_date_3 = date_3,
           venue = venue)
       invitation.put()
-      self.response.out.write(str(self.request))
       #self.redirect('/profile/' + profileid + '/view')
+      self.redirect('/home')
 
     if (action == 'edit'):
       profile = models.Profile.get_by_id(int(profileid))

@@ -35,6 +35,8 @@ class Invited(db.Model):
   date_date_2 = db.DateTimeProperty()
   date_date_3 = db.DateTimeProperty()
   venue = db.ReferenceProperty(Venue)
+  reported = db.BooleanProperty(default=False)
+  reported_note = db.StringProperty()
 
 class Accepted(db.Model):
   inviter = db.ReferenceProperty(Profile, collection_name = 'inviters_accepted')
