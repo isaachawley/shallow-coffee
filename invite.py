@@ -18,6 +18,17 @@ class MainHandler(webapp.RequestHandler):
     inviteid = self.request.path_info_pop()
     action = self.request.path_info_pop()
 
+    if (action == 'accept'):
+      user = users.get_current_user()
+      if not user:
+        self.redirect('/')
+      invite = models.Invited.get_by_id(int(inviteid))
+      accepted = models.Accepted(inviter = invite.inviter, invitee = invite.invitee, invited_date = invite.invited_date, venue = invite.venue)
+
+      invite.delete()
+      accepted.put()
+      self.redirect('/home')
+
     if (action == 'cancel'):
       user = users.get_current_user()
       if not user:
