@@ -51,6 +51,9 @@ handlers:
 
 - url: /invite.*
   script: invite.py
+
+- url: /accepted.*
+  script: accepted.py
   
 - url: /rpc.*
   script: rpc.py

@@ -15,48 +15,17 @@ import geo.geotypes
 class MainHandler(webapp.RequestHandler):
   def get(self):
     self.request.path_info_pop()
-    inviteid = self.request.path_info_pop()
+    acceptedid = self.request.path_info_pop()
     action = self.request.path_info_pop()
-
-    if (action == 'accept'):
-      user = users.get_current_user()
-      if not user:
-        self.redirect('/')
-      invite = models.Invited.get_by_id(int(inviteid))
-      accepted = models.Accepted(inviter = invite.inviter, invitee = invite.invitee, invited_date = invite.invited_date, venue = invite.venue)
-
-      invite.delete()
-      accepted.put()
-      self.redirect('/home')
 
     if (action == 'cancel'):
       user = users.get_current_user()
       if not user:
         self.redirect('/')
 
-      invite = models.Invited.get_by_id(int(inviteid))
+      accepted = models.Accepted.get_by_id(int(acceptedid))
       #check if valid invitation at some point
-      invite.delete()
-      self.redirect('/home/')
-
-    if (action == 'decline'):
-      user = users.get_current_user()
-      if not user:
-        self.redirect('/')
-
-      invite = models.Invited.get_by_id(int(inviteid))
-      invite_archive = models.Invite_Archive(
-          inviter = invite.inviter,
-          invitee = invite.invitee,
-          invited_date = invite.invited_date,
-          date_date = invite.date_date_1,
-          venue = invite.venue,
-          result = 'declined'
-          )
-      invite_archive.put()
-      #check if valid invitation at some point
-      #notify inviter that their invitation was declined
-      invite.delete()
+      accepted.delete()
       self.redirect('/home/')
 
     if (action == 'report'):
@@ -64,11 +33,11 @@ class MainHandler(webapp.RequestHandler):
       if not user:
         self.redirect('/')
 
-      invite = models.Invited.get_by_id(int(inviteid))
+      accepted = models.Accepted.get_by_id(int(acceptedid))
       #check if valid invitation at some point
-      invite.reported = True;
-      invite.reported_note = "reproted!!!"
-      invite.put()
+      accepted.reported = True;
+      accepted.reported_note = "reproted!!!"
+      accepted.put()
       self.redirect('/home/')
 
     #path = os.path.join(
@@ -83,7 +52,7 @@ class MainHandler(webapp.RequestHandler):
 
 def main():
   application = webapp.WSGIApplication([
-									('/invite.*', MainHandler)
+									('/accepted.*', MainHandler)
 									],
                                        debug=True)
   wsgiref.handlers.CGIHandler().run(application)
