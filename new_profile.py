@@ -22,24 +22,16 @@ class MainHandler(webapp.RequestHandler):
     if not user:
       self.redirect(users.create_login_url(self.request.uri))
 
-    if self.request.get("loctype") == "name":
-      try:
-        gc = geocode.GeoCode()
-        locdata = gc.getCoords(self.request.get("loc"))
-        coords = locdata["Placemark"][0]["Point"]["coordinates"]
-        self.response.out.write(coords)
-      except:
-        self.response.out.write("<h1>Upload Failed</h1>")
-        self.response.out.write("<p>Something is wrong with the location.")
-        return
-        
-    elif self.request.get("loctype") == "coords":
-      coordstring = self.request.get("loc")
-      coords = coordstring.split(",")
-    else:
-      self.request.out.write("Wrong loctype")
+    try:
+      gc = geocode.GeoCode()
+      locdata = gc.getCoords(self.request.get("loc"))
+      coords = locdata["Placemark"][0]["Point"]["coordinates"]
+      self.response.out.write(coords)
+    except:
+      self.response.out.write("<h1>Upload Failed</h1>")
+      self.response.out.write("<p>Something is wrong with the location.")
       return
-    
+        
     profile = models.Profile(
       location=db.GeoPt(
         float(coords[1]), 

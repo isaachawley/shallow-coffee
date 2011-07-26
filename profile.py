@@ -115,6 +115,7 @@ class MainHandler(webapp.RequestHandler):
       profile.gender = self.request.get('gender')
       profile.wants = self.request.get('wants')
       profile.put()
+      self.redirect('/home')
 
 
 def main():

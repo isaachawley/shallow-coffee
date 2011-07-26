@@ -19,30 +19,33 @@ class MainHandler(webapp.RequestHandler):
   def getNearby(self):
     user = users.get_current_user()
     logging.debug('start getNearby')
-    lat = self.request.get("lon")
-    lon = self.request.get("lat")
-    logging.debug('getNearby lon[' + lon + '] lat[' + lat + ']')
+    profile = models.Profile.all().filter('user_id =',user.user_id()).get()
+    lat = profile.location.lat
+    lon = profile.location.lon
+    #lat = self.request.get("lon")
+    #lon = self.request.get("lat")
+
+    preference = self.request.get("searchfor")
+    if preference == 'w4m' or preference == 'w4w':
+      gender = 'f'
+    else:
+      gender = 'm'
+
+    if preference == 'w4w' or preference == 'm4w':
+      wants = 'f'
+    else:
+      wants = 'm'
+
+    max_distance = self.request.get("nearish")
+    has_pic = self.request.get("haspic")
+    last_online = self.request.get("online")
+    logging.debug('search params: pref[' + preference + '] max_dist[' + max_distance + '] has_pic[' + has_pic + '] last_online[' + last_online + ']')
+
     mainHash = {} #main response hash
-    mapHash = {} #map data hash
     profiles = models.Profile.proximity_fetch(
-          models.Profile.all().filter('user_id !=',user.user_id()), 
-          db.GeoPt(float(lon), float(lat)), 
+          models.Profile.all().filter('user_id !=',user.user_id()).filter('gender ==',gender).filter('wants ==',wants), 
+          db.GeoPt(float(lat), float(lon)), 
           max_results=10)
-
-    for p in profiles:
-      plocs = {} #dict for profiles
-      plocs["lon"] = p.location.lat
-      plocs["lat"] = p.location.lon
-      plocs["id"] = p.key().id().__str__()
-      if (p.pictures.count() > 0):
-        plocs["picid"] = p.pictures[0].key().id().__str__()
-      #plocs["content"] = p.content
-      plocs["nick"] = p.nick
-      logging.debug('getNearby adding[' + p.nick + '] to maphash')
-      mapHash[p.key().__str__()] = plocs
-      
-    mainHash["mapdata"] = mapHash
-
     template_values = {
       "profiles" : profiles, 
     }

@@ -1,37 +1,58 @@
 {% extends "outer_main.html" %}
 {% block title %} Locs {% endblock title %}
 {% block innerjs %}
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAGGMJIuUzby07NUrR7mallhTO5SMOnbNMld8-9ly8A2W2BJna7hTVMeUv5o1lc66IuTbSqr-ctvoUKg" type="text/javascript"></script>
-<script type="text/javascript" src="/static/markermanager.js"></script>
 <script type="text/javascript" src="/static/locMap.js" ></script>
 {% endblock innerjs %}
-{% block bodyattrs %}onunload="GUnload();"{% endblock bodyattrs %}
+{% block bodyattrs %}
+{% endblock bodyattrs %}
 {% block content %}
 <div class="container round">
 <h1>Shallow Coffee - <a href="/static/faq.html">FAQ</a> </h1>
-<div id="center_lat" style="display:none;">{{center_lat}}</div>
-<div id="center_lon" style="display:none;">{{center_lon}}</div>
-<div id="map" class="map round">
-  <div id="map_canvas" style="height:500px"></div>
-  <div id="map_controls" class="map_controls">
-	<button type="button" id="go" class="gobutton roundbutton round" onclick="search_on_map_center();">
-		Search Here
-	</button>
-	<!--<button type="button" onclick="set_location_here();">
-		Set Location Here
-	</button> -->
-	</div>
-</div>
 <div class="piclist">
-<p><b>//N// nearest pics within //X// miles of //{{center_lat}}, {{center_lon}}//</b></p>
+  <div class="searchbar">
+    <span class="searchfor">
+      show:
+      <select name="searchfor" class="optionchange">
+        <option>w4m</option>
+        <option>m4w</option>
+        <option>w4w</option>
+        <option>m4m</option>
+        <option>any</option>
+      </select>
+    </span>
+    <span class="nearish">
+      within:
+      <select name="nearish" class="optionchange">
+        <option value="1">1 mile</option>
+        <option value="5">5 miles</option>
+        <option value="20">20 miles</option>
+        <option value="50">50 miles</option>
+        <option value="250">250 miles</option>
+        <option value="any">Anywhere</option>
+      </select>
+    </span>
+    <span class="haspic" class="optionchange">
+      has pic:
+      <input type="checkbox" name="haspic" value="haspic" checked="true"/>
+    </span>
+    <span class="online">
+      last online:
+      <select name="lastonline" class="optionchange">
+        <option value="now">online now!</option>
+        <option value="day">today</option>
+        <option value="week" selected="true">this week</option>
+        <option value="month">this month</option>
+        <option value="year">this year</option>
+        <option value="any">anytime</option>
+      </select>
+    </span>
+  </div>
+
 <div id="piclist_container">
 <p>Loading...</p>
 </div>
 <div id="latest_container" style="display:none;">
 </div>
-</div>
-<div class="middle">
-  <a id="showformbutton" href="/new_profile/?default_lon={{center_lon}}&default_lat={{center_lat}}" class="bigbutton roundbutton round">New Profile</a>
 </div>
 </div>
 {% endblock content %}

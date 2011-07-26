@@ -12,6 +12,19 @@ indexes:
 
 - kind: Profile
   properties:
+  - name: gender
+  - name: location_geocells
+  - name: user_id
+
+- kind: Profile
+  properties:
+  - name: gender
+  - name: location_geocells
+  - name: wants
+  - name: user_id
+
+- kind: Profile
+  properties:
   - name: location_geocells
   - name: user_id
 
