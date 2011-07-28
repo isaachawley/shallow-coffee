@@ -1,0 +1,24 @@
+<div>
+	{% for venue in venues %}
+    <div>
+      <div class="profile_details">
+      <span>
+            <a href="/profile/{{profile.key.id}}/view">
+        <h1>
+        {{venue.name}}
+        </h1>
+            </a>
+      </span>
+      <span>
+        located // {{venue.vicinity}}
+        </span>
+        <span>  </span>
+        <span>
+      </span>
+      <span>
+      </span>
+    </div>
+    <div>
+    </div>
+	{% endfor %}
+</div>

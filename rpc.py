@@ -65,8 +65,16 @@ class MainHandler(webapp.RequestHandler):
     #venue settings and types
     #but, for now, fuck it
     request_url = 'https://maps.googleapis.com/maps/api/place/search/json?location=' + str(p_lat) + ',' + str(p_lon) + '&radius=500&name=starbucks&sensor=false&key=AIzaSyD-wqm_olE-Dr374K2QT52xMNeuG1CaJVI'
-    result = urlfetch.fetch(request_url)
-    return result.content
+    url_result = urlfetch.fetch(request_url)
+    content = url_result.content
+    json_decoder = simplejson.decoder.JSONDecoder()
+    json = json_decoder.decode(content)
+    results = json['results']
+    template_values = {
+        "venues" : results,
+        }
+    path = os.path.join(os.path.dirname(__file__), 'templates/rpc_venues.html')
+    return template.render(path, template_values)
 
   def uploadPic(self):
     profile_id= self.request.get("profile_id")
