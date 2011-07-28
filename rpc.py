@@ -8,8 +8,10 @@ from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from django.utils import simplejson
+from google.appengine.api import urlfetch
 from google.appengine.ext import webapp
 from google.appengine.api import images
+from urllib import urlencode
 
 #custom imports
 import models
@@ -54,6 +56,18 @@ class MainHandler(webapp.RequestHandler):
     mainHash["tablehtml"] = templatehtml
     return simplejson.dumps(mainHash)
 
+  def getVenues(self):
+    user = users.get_current_user()
+    profile = models.Profile.all().filter('user_id =',user.user_id()).get()
+    p_lat = profile.location.lat
+    p_lon = profile.location.lon
+    #TODO parse settings that might affect 
+    #venue settings and types
+    #but, for now, fuck it
+    request_url = 'https://maps.googleapis.com/maps/api/place/search/json?location=' + str(p_lat) + ',' + str(p_lon) + '&radius=500&name=starbucks&sensor=false&key=AIzaSyD-wqm_olE-Dr374K2QT52xMNeuG1CaJVI'
+    result = urlfetch.fetch(request_url)
+    return result.content
+
   def uploadPic(self):
     profile_id= self.request.get("profile_id")
     profile = models.Profile.get_by_id(int(profile_id))
@@ -81,6 +95,9 @@ class MainHandler(webapp.RequestHandler):
     
     if (action == 'nearby'):
       self.response.out.write(self.getNearby())
+
+    if action == 'get_venues':
+      self.response.out.write(self.getVenues())
       
   def post(self):
     self.request.path_info_pop()

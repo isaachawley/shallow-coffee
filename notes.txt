@@ -12,7 +12,11 @@ http://tookthishere.appspot.com gmaps api key
 ABQIAAAAGGMJIuUzby07NUrR7mallhTO5SMOnbNMld8-9ly8A2W2BJna7hTVMeUv5o1lc66IuTbSqr-ctvoUKg
 
 TODO:
-1. get production gmaps api keys
+1. get production gmaps api keys... bleh
+
+got venues (just starbucks for now, who cares)
+take results from venues > list > template > html > return
+select venue > save venue > use for invitation
 
 
 
