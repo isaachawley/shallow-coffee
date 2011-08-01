@@ -1,5 +1,40 @@
+{% extends "outer_main.html" %}
+{% block title %} Invite {% endblock title %}
+{% block innerjs %}
+{% endblock innerjs %}
+{% block bodyattrs %}
+{% endblock bodyattrs %}
+{% block content %}
 <div>
   <form action="/profile/{{profileid}}/ask" method="post">
+    <table>
+      <tr>
+        <td>
+    <div>
+      <h1>Select a Venue</h1>
+    {% for venue in venues %}
+      <div>
+        <input type="radio" name="venue" value="{{venue.reference}}">
+        <span class="venue_details">
+          <span>
+                  <h1>
+                    <img src="{{venue.icon}}" />
+                    {{venue.name}}
+                  </h1>
+          </span>
+          <span>
+            {{venue.vicinity}}
+            </span>
+          </span>
+        </span>
+      </input>
+    {% endfor %}
+  </div>
+  </td>
+  <td valign="top">
+    <h1>
+      Pick 3 Times
+    </h1>
 
     <div>
       <h3>1</h3>
@@ -26,7 +61,8 @@
       <input type="text" name="time_3" value="7:00"/>
     </div>
     <input type="hidden" name="action" value="ask"/>
-    <button type="submit">Invite</button>
+    <button type="submit"><h1>Invite<h1></button>
+  </td>
   </form>
 </div>
-
+{% endblock content %}

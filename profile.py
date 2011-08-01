@@ -6,6 +6,9 @@ from google.appengine.ext import webapp
 from google.appengine.api import users 
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
+from urllib import urlencode
+from django.utils import simplejson
+from google.appengine.api import urlfetch
 
 #custom imports
 import models
@@ -67,8 +70,21 @@ class MainHandler(webapp.RequestHandler):
       user = users.get_current_user()
       if not user:
         self.redirect(users.create_login_url(self.request.uri))
+      profile = models.Profile.all().filter('user_id =',user.user_id()).get()
+      p_lat = profile.location.lat
+      p_lon = profile.location.lon
+      #TODO parse settings that might affect 
+      #venue settings and types
+      #but, for now, fuck it
+      request_url = 'https://maps.googleapis.com/maps/api/place/search/json?location=' + str(p_lat) + ',' + str(p_lon) + '&radius=500&name=starbucks&sensor=false&key=AIzaSyD-wqm_olE-Dr374K2QT52xMNeuG1CaJVI'
+      url_result = urlfetch.fetch(request_url)
+      content = url_result.content
+      json_decoder = simplejson.decoder.JSONDecoder()
+      json = json_decoder.decode(content)
+      results = json['results']
       askee = models.Profile.get_by_id(int(profileid))
       template_values = {
+        "venues" : results,
         'profileid' : profileid,
       }
       path = os.path.join(os.path.dirname(__file__), 'templates/schedule_form.html')
@@ -85,9 +101,25 @@ class MainHandler(webapp.RequestHandler):
         self.redirect(users.create_login_url(self.request.uri))
       asker = models.Profile.all().filter('user_id ==',user.user_id()).fetch(1)[0]
       askee = models.Profile.get_by_id(int(profileid))
-      venues = models.Venue.all()
-      for venuea in venues:
-        venue = venuea
+
+      #make a venue from the venue reference given
+      venue_ref = self.request.get('venue')
+      request_url = 'https://maps.googleapis.com/maps/api/place/details/json?reference=' + venue_ref + '&sensor=false&key=AIzaSyD-wqm_olE-Dr374K2QT52xMNeuG1CaJVI'
+      url_result = urlfetch.fetch(request_url)
+      content = url_result.content
+      json_decoder = simplejson.decoder.JSONDecoder()
+      json = json_decoder.decode(content)
+      result = json['result']
+      #TODO check if venue already exists
+      venue = models.Venue(
+          name = result["name"],
+          desc = result["name"],
+          reference = result["reference"],
+          vicinity = result["vicinity"],
+          icon = result["icon"],
+          url = result["url"],
+          )
+      venue.put()
 
       date_1_str = self.request.get('date_1') + ' '  + self.request.get('time_1')
       date_1 =  datetime.strptime(date_1_str, "%m/%d/%y %H:%M")

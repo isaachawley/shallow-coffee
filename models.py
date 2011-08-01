@@ -26,6 +26,10 @@ class Pic(db.Model):
 class Venue(db.Model):
   name = db.StringProperty()
   desc = db.StringProperty()
+  reference = db.StringProperty()
+  vicinity = db.StringProperty()
+  icon = db.StringProperty()
+  url = db.StringProperty()
 
 class Invited(db.Model):
   inviter = db.ReferenceProperty(Profile, collection_name = 'inviters')
