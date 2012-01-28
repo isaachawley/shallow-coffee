@@ -104,7 +104,7 @@ class MainHandler(webapp.RequestHandler):
 
       #make a venue from the venue reference given
       venue_ref = self.request.get('venue')
-      request_url = 'https://maps.googleapis.com/maps/api/place/details/json?reference=' + venue_ref + '&sensor=false&key=AIzaSyD-wqm_olE-Dr374K2QT52xMNeuG1CaJVI'
+      request_url = 'https://maps.googleapis.com/maps/api/place/details/json?reference=' + venue_ref + '&sensor=false&key=AIzaSyBL5fcUg17GXC02P8EajdYuPUHt_jIUGEU'
       url_result = urlfetch.fetch(request_url)
       content = url_result.content
       json_decoder = simplejson.decoder.JSONDecoder()
