@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import wsgiref.handlers
 import os
-from datetime import datetime, date, time 
+from datetime import datetime, date, time, timedelta
 from google.appengine.ext import webapp
 from google.appengine.api import users 
 from google.appengine.ext import db
@@ -84,9 +84,18 @@ class MainHandler(webapp.RequestHandler):
       json = json_decoder.decode(content)
       results = json['results']
       askee = models.Profile.get_by_id(int(profileid))
+
+      today = date.today()
+      d1 = today + timedelta(days=1)
+      d2 = d1 + timedelta(days=1)
+      d3 = d2 + timedelta(days=1)
+
       template_values = {
         "venues" : results,
         'profileid' : profileid,
+	'd1s' : d1.strftime("%m/%d/%y"),
+	'd2s' : d2.strftime("%m/%d/%y"),
+	'd3s' : d3.strftime("%m/%d/%y"),
       }
       path = os.path.join(os.path.dirname(__file__), 'templates/schedule_form.html')
       self.response.out.write(template.render(path, template_values))
