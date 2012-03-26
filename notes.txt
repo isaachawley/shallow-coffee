@@ -14,9 +14,14 @@ ABQIAAAAGGMJIuUzby07NUrR7mallhTO5SMOnbNMld8-9ly8A2W2BJna7hTVMeUv5o1lc66IuTbSqr-c
 TODO:
 1. get production gmaps api keys... bleh
 
-got venues (just starbucks for now, who cares)
-take results from venues > list > template > html > return
-select venue > save venue > use for invitation
+lightbox profile images on nearby and profile and home
+better scheduling - take today into account
+? ajax the ask ?
+
+
+DONE got venues (just starbucks for now, who cares)
+DONE take results from venues > list > template > html > return
+DONE select venue > save venue > use for invitation
 
 
 
