@@ -15,10 +15,10 @@ TODO:
 1. get production gmaps api keys... bleh
 
 lightbox profile images on nearby and profile and home
-better scheduling - take today into account
 ? ajax the ask ?
 
 
+DONE better scheduling - take today into account
 DONE got venues (just starbucks for now, who cares)
 DONE take results from venues > list > template > html > return
 DONE select venue > save venue > use for invitation
