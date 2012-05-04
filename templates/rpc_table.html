@@ -29,8 +29,8 @@
     </div>
     <div>
       {% for pic in profile.pictures %}
-        <span>
-          <a href="/fullimg/{{pic.key.id}}"><img src="/thumb/{{pic.key.id}}" /></a>
+        <span class="gallery">
+          <a href="/image/{{pic.key.id}}"><img src="/thumb/{{pic.key.id}}" /></a>
         </span>
       {% endfor %}
     </div>

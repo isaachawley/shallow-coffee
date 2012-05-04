@@ -78,11 +78,17 @@ class MainHandler(webapp.RequestHandler):
       #but, for now, fuck it
       request_url = 'https://maps.googleapis.com/maps/api/place/search/json?location=' + str(p_lat) + ',' + str(p_lon) + '&radius=5000&name=starbucks&sensor=false&key=AIzaSyBL5fcUg17GXC02P8EajdYuPUHt_jIUGEU'
       # self.response.out.write(request_url)
-      url_result = urlfetch.fetch(request_url)
-      content = url_result.content
-      json_decoder = simplejson.decoder.JSONDecoder()
-      json = json_decoder.decode(content)
-      results = json['results']
+      # mocking
+      if (1):
+        venues = models.Venue.all()
+	results = venues
+      else:
+        url_result = urlfetch.fetch(request_url)
+        content = url_result.content
+        json_decoder = simplejson.decoder.JSONDecoder()
+        json = json_decoder.decode(content)
+        results = json['results']
+
       askee = models.Profile.get_by_id(int(profileid))
 
       today = date.today()

@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+
   $("#showLatest").click(
     function(event){
       $(this).hide();
@@ -33,6 +35,7 @@ $(document).ready(function(){
         $("#piclist_container").hide();
         $("#piclist_container").html(response.tablehtml);
         $("#piclist_container").show("slow");
+        $('span.gallery a').lightBox(); // Select all links with lightbox class
       }
     }
     req.send(null);
@@ -56,4 +59,5 @@ $(document).ready(function(){
   //    }
   //    req.send(null);
 });
+
 

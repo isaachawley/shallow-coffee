@@ -11,9 +11,9 @@ import models
 class MainHandler(webapp.RequestHandler):
 	
 	def get(self):
-		#self.response.headers['Content-Type'] = 'image/jpeg'
 		self.request.path_info_pop()
 		pic = models.Pic.get_by_id(int(self.request.path_info_pop()))
+		self.response.headers['Content-Type'] = "image/png"
 		self.response.out.write(pic.picBlob.blob)
 		
 def main():
